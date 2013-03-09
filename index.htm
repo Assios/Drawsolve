@@ -1,0 +1,73 @@
+<html>
+    <head>
+        <title>DRAWSOLVE</title>
+        <link rel="stylesheet" type="text/css" href="style.css" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    </head>
+    <body>
+        <div class="center">
+            <FORM NAME = drawsolve>
+            <h1>DRAWSOLVE</h1>
+            <b><i>The best Drawsomething-solver on the web!</b></i>
+            <h2>Optimized for iPhone and Android<br></h2>
+            Length of word:<br><INPUT TYPE = Text NAME = wordLength SIZE = 2 value ="" maxlength = "1" onkeyup="run()">
+            <br>
+            Letters:<br><INPUT TYPE = Text NAME = bokstaver SIZE = 12 value ="" maxlength = "12" onkeyup="run()">
+            <br>
+            <p>(ɔ) <a href="http://steinskog.me" target="_blank">Asbjørn Steinskog</a></p>
+            <span id="textLabel"></span>
+            <br>
+        </div>
+        <script type="text/javascript">
+            function run() {
+            	txt2 = txt.slice();
+            	antallbok = document.drawsolve.wordLength.value.toLowerCase();
+            	bokstav = document.drawsolve.bokstaver.value.toLowerCase();
+            	if (bokstav == "fullwordlist") {
+            		string="<b>FULLWORDLIST</b><br>"
+            		for (i=0; i < txt2.length; i++) {
+            		string+="<li>"+txt2[i];
+            		if (i < txt2.length-1)
+            			string+="<br>";
+            	}
+            	document.getElementById('textLabel').innerHTML = string;
+            	exit();
+            	}
+            	orden1 = findWord(sortByWordLength(txt2, antallbok), bokstav);
+            	if (bokstav.length < 2 && antallbok=='')
+            		exit();
+            	if (!(antallbok < 9 && antallbok > 1)) {
+            		if (antallbok=='') {
+            			exit();
+            		}
+            		else {
+            			alert("The word length is between 2 and 8.");
+            			exit();
+            		}
+            	}
+            	if (orden1.length == 0) {
+            		string="";
+            		if (bokstav.length>11)
+            			string="No words found.<br>Are you sure the word length is correct?";
+            	}
+            	else if (orden1.length == 1) {
+            		string = "The word is " + orden1;
+            	}
+            	else {
+            		if (orden1.length != 0)
+            		string = orden1.length + " possible words:<br>";
+            	for (i=0; i < orden1.length; i++) {
+            		string+="<li>"+orden1[i];
+            		if (i < orden1.length-1)
+            			string+="<br>";
+            	}
+            	}
+            	document.getElementById('textLabel').innerHTML = string;
+            	exit();
+            }
+        </script>
+        <script src='words.js'></script>
+        <script src='functions.js'></script>
+    </body>
+</html>
